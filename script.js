@@ -216,6 +216,30 @@ function initCurrentBatch() {
  * 处理用户反馈
  * @param {string} feedbackType - 反馈类型: 'knew'|'didnt'|'mastered'
  */
+// 从本地存储加载学习进度
+function loadProgress() {
+  const savedProgress = localStorage.getItem("wordProgress");
+  if (savedProgress) {
+    const progressData = JSON.parse(savedProgress);
+    // 恢复每个单词的记忆次数
+    wordList.forEach((word) => {
+      const savedWord = progressData.find((w) => w.word === word.word);
+      if (savedWord) {
+        word.memoryCount = savedWord.memoryCount;
+      }
+    });
+  }
+}
+
+// 保存学习进度到本地存储
+function saveProgress() {
+  const progressData = wordList.map((word) => ({
+    word: word.word,
+    memoryCount: word.memoryCount,
+  }));
+  localStorage.setItem("wordProgress", JSON.stringify(progressData));
+}
+
 function handleFeedback(feedbackType) {
   // 获取当前单词
   const currentWord = currentBatchPool[currentCardIndex - 1];
@@ -239,6 +263,9 @@ function handleFeedback(feedbackType) {
 
   // 直接显示下一张卡片，跳过翻转动画
   showNextCard();
+
+  // 新增保存进度
+  saveProgress();
 }
 
 /**
