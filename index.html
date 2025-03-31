@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>单词闪卡记忆系统</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>单词闪卡记忆系统</h1>
+        <p>基于艾宾浩斯记忆曲线，帮助你高效记忆单词</p>
+      </header>
+
+      <div class="file-upload-section">
+        <h2>上传单词文件</h2>
+        <p class="instruction">支持TXT格式：单词 词性. 中文释义</p>
+        <p class="example">示例：profound adj. 深刻的；深奥的</p>
+        <div class="upload-area">
+          <input type="file" id="wordFile" accept=".txt" class="file-input" />
+          <label for="wordFile" class="file-label">选择文件</label>
+          <span id="fileName">未选择文件</span>
+        </div>
+        <div id="errorLog" class="error-log hidden">
+          <h3>解析错误日志</h3>
+          <ul id="errorList"></ul>
+        </div>
+      </div>
+
+      <div class="mode-selection">
+        <h2>选择学习模式</h2>
+        <div class="mode-buttons">
+          <button id="englishFirst" class="mode-btn active">英文优先</button>
+          <button id="chineseFirst" class="mode-btn">中文优先</button>
+        </div>
+      </div>
+
+      <div class="study-section hidden" id="studySection">
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-label">当前批次</span>
+            <span id="currentBatch" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">剩余单词</span>
+            <span id="remainingWords" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">已掌握</span>
+            <span id="masteredWords" class="stat-value">0</span>
+          </div>
+        </div>
+
+        <div class="flashcard" id="flashcard">
+          <div class="flashcard-inner">
+            <div class="flashcard-front" id="cardFront">
+              <!-- 正面内容将由JS动态填充 -->
+            </div>
+            <div class="flashcard-back" id="cardBack">
+              <!-- 背面内容将由JS动态填充 -->
+            </div>
+          </div>
+        </div>
+
+        <div class="card-controls">
+          <button id="showAnswer" class="control-btn">显示答案</button>
+          <div class="feedback-btns hidden" id="feedbackBtns">
+            <button id="knewIt" class="feedback-btn success">认识</button>
+            <button id="didntKnow" class="feedback-btn danger">不认识</button>
+            <button id="markAsMastered" class="feedback-btn mastered">
+              标记为熟词
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
