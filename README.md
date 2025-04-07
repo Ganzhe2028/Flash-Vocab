@@ -57,7 +57,7 @@ open index.html
 
 ## ⚖️ 开源协议
 
-MIT License © 2024 KaiHuang
+MIT License © 2024 Ganzhe
 
 ```plaintext
 
