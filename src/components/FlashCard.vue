@@ -10,24 +10,50 @@ const props = defineProps({
 const emit = defineEmits(['know', 'dontKnow', 'markAsMastered']);
 
 const isFlipped = ref(false);
+const showAnswer = ref(false);
+const answered = ref(false);
 
 const flipCard = () => {
-  isFlipped.value = !isFlipped.value;
+  if (answered.value) {
+    isFlipped.value = !isFlipped.value;
+  }
 };
 
 const handleKnow = () => {
-  emit('know');
-  isFlipped.value = false;
+  answered.value = true;
+  showAnswer.value = true;
+  isFlipped.value = true;
 };
 
 const handleDontKnow = () => {
-  emit('dontKnow');
-  isFlipped.value = false;
+  answered.value = true;
+  showAnswer.value = true;
+  isFlipped.value = true;
 };
 
 const handleMarkAsMastered = () => {
   emit('markAsMastered');
   isFlipped.value = false;
+};
+
+const handleNext = () => {
+  emit('know');
+  answered.value = false;
+  showAnswer.value = false;
+  isFlipped.value = false;
+  setTimeout(() => {
+    isFlipped.value = false;
+  }, 100);
+};
+
+const handleWrong = () => {
+  emit('dontKnow');
+  answered.value = false;
+  showAnswer.value = false;
+  isFlipped.value = false;
+  setTimeout(() => {
+    isFlipped.value = false;
+  }, 100);
 };
 </script>
 
@@ -40,13 +66,19 @@ const handleMarkAsMastered = () => {
       </div>
       <div class="flashcard-back">
         <div class="content">{{ backContent }}</div>
+        <div class="mask" v-if="!showAnswer"></div>
       </div>
     </div>
     
     <div class="action-buttons">
-      <button class="action-btn know" @click="handleKnow">✅ 认识</button>
-      <button class="action-btn dont-know" @click="handleDontKnow">❌ 不认识</button>
-      <button class="action-btn mastered" @click="handleMarkAsMastered">🎯 标熟</button>
+      <button v-if="!answered" class="action-btn know" @click="handleKnow">✅ 认识</button>
+      <button v-if="!answered" class="action-btn dont-know" @click="handleDontKnow">❌ 不认识</button>
+      <button v-if="!answered" class="action-btn mastered" @click="handleMarkAsMastered">🎯 标熟</button>
+      
+      <div v-if="showAnswer" class="answer-actions">
+        <button class="action-btn next" @click="handleNext">➡️ 下一个</button>
+        <button class="action-btn wrong" @click="handleWrong">❌ 答错了</button>
+      </div>
     </div>
   </div>
 </template>
@@ -98,6 +130,18 @@ const handleMarkAsMastered = () => {
   color: #333;
   transform: rotateY(180deg);
   z-index: 1;
+  position: relative;
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e9ecef;
+  z-index: 2;
+  border-radius: 10px;
 }
 
 .flashcard.flipped .flashcard-front {
@@ -120,6 +164,13 @@ const handleMarkAsMastered = () => {
 }
 
 .action-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+}
+
+.answer-actions {
   display: flex;
   gap: 10px;
 }
@@ -145,6 +196,16 @@ const handleMarkAsMastered = () => {
 
 .mastered {
   background-color: #007bff;
+  color: white;
+}
+
+.next {
+  background-color: #28a745;
+  color: white;
+}
+
+.wrong {
+  background-color: #dc3545;
   color: white;
 }
 
