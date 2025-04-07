@@ -10,17 +10,17 @@ const showErrorLog = ref(false);
 // 解析单词文件
 const parseWordFile = (file) => {
   const reader = new FileReader();
-  
+
   reader.onload = (e) => {
     const content = e.target.result;
     const lines = content.split('\n').filter(line => line.trim() !== '');
     const words = [];
     const errors = [];
-    
+
     lines.forEach((line, index) => {
-      // 匹配格式：单词 词性. 中文释义
-      const match = line.match(/^([^\s]+)\s+([^\s.]+)\.(.*?)$/);
-      
+      // 匹配格式：单词 词性. 中文释义 或 单词 词性 中文释义
+      const match = line.match(/^([^\s]+)\s+([^\s.]+)\.?\s*(.*?)\s*$/) || line.match(/^([^\s]+)\s+([^\s]+)\s+(.*?)\s*$/);
+
       if (match) {
         const [, word, partOfSpeech, definition] = match;
         words.push({
@@ -31,10 +31,10 @@ const parseWordFile = (file) => {
           memoryCount: 0
         });
       } else {
-        errors.push(`第${index + 1}行: "${line}" 格式错误，应为 "单词 词性. 中文释义"`);
+        errors.push(`第${index + 1}行: "${line}" 格式错误，应为 "单词 词性. 中文释义" 或 "单词 词性 中文释义"`);
       }
     });
-    
+
     if (errors.length > 0) {
       errorList.value = errors;
       showErrorLog.value = true;
@@ -44,7 +44,7 @@ const parseWordFile = (file) => {
       emit('wordsLoaded', words);
     }
   };
-  
+
   reader.readAsText(file);
 };
 
@@ -93,7 +93,8 @@ h2 {
   color: #333;
 }
 
-.instruction, .example {
+.instruction,
+.example {
   margin: 10px 0;
   color: #6c757d;
 }

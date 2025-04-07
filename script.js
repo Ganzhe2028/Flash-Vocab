@@ -78,7 +78,7 @@ function parseWordFile(content) {
   const errors = [];
 
   // 正则表达式匹配格式：单词 词性. 中文释义
-  const regex = /^([a-zA-Z-]+)\s+([a-zA-Z\.]+)\s+(.+)$/;
+  const regex = /^([a-zA-Z-]+)\s+([a-zA-Z]+)\.?\s*(.+)$/;
 
   lines.forEach((line, index) => {
     // 跳过空行
