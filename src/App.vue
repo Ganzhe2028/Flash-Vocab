@@ -209,6 +209,17 @@ watch(words, () => {
     alert('恭喜！您已掌握所有单词！');
   }
 }, { deep: true });
+
+// 重置学习进度
+const resetProgress = () => {
+  if (confirm('确定要重置学习进度吗？这将清除所有记忆次数。')) {
+    words.value.forEach(word => {
+      word.memoryCount = 0;
+    });
+    localStorage.removeItem('flashVocabProgress');
+    currentWordIndex.value = 0;
+  }
+};
 </script>
 
 <template>
@@ -216,6 +227,7 @@ watch(words, () => {
     <header>
       <h1>单词闪卡记忆系统</h1>
       <p>基于艾宾浩斯记忆曲线，帮助你高效记忆单词</p>
+      <button @click="resetProgress" class="reset-btn">重置进度</button>
     </header>
     
     <FileUploader 

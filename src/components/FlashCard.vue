@@ -53,7 +53,7 @@ const handleWrong = () => {
   isFlipped.value = false;
   setTimeout(() => {
     isFlipped.value = false;
-  }, 100);
+  }, 100);localStorage
 };
 </script>
 
