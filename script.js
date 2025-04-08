@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
   didntKnowBtn.addEventListener("click", () => handleFeedback("didnt"));
   markAsMasteredBtn.addEventListener("click", () => handleFeedback("mastered"));
 
+  // 添加键盘事件监听
+  document.addEventListener("keydown", handleKeyPress);
+
   // 从本地存储加载学习进度
   loadProgress();
 });
@@ -247,24 +250,37 @@ function handleFeedback(feedbackType) {
   // 根据反馈类型处理
   switch (feedbackType) {
     case "knew":
-      // 认识: 增加记忆次数
       currentWord.memoryCount++;
+      // 达到4次记忆后移出当前批次池
+      if (currentWord.memoryCount >= 4) {
+        const index = currentBatchPool.findIndex((w) => w === currentWord);
+        if (index > -1) {
+          currentBatchPool.splice(index, 1);
+          // 调整当前索引防止越界
+          if (currentCardIndex > currentBatchPool.length) {
+            currentCardIndex = currentBatchPool.length;
+          }
+        }
+      }
       break;
     case "didnt":
-      // 不认识: 重置记忆次数
       currentWord.memoryCount = 0;
       break;
     case "mastered":
-      // 标熟: 标记为已掌握
       currentWord.memoryCount = 4;
       masteredWords.push(currentWord);
+      // 立即移出当前批次池
+      const index = currentBatchPool.findIndex((w) => w === currentWord);
+      if (index > -1) {
+        currentBatchPool.splice(index, 1);
+        if (currentCardIndex > currentBatchPool.length) {
+          currentCardIndex = currentBatchPool.length;
+        }
+      }
       break;
   }
 
-  // 直接显示下一张卡片，跳过翻转动画
   showNextCard();
-
-  // 新增保存进度
   saveProgress();
 }
 
@@ -290,6 +306,24 @@ function updateStats() {
 /**
  * 显示下一张卡片
  */
+// 处理键盘事件
+function handleKeyPress(event) {
+  if (event.target.tagName === "INPUT") return;
+
+  switch (event.key.toLowerCase()) {
+    case "q":
+      if (!isCardFlipped) {
+        flipCard();
+      } else {
+        handleFeedback("knew");
+      }
+      break;
+    case "e":
+      handleFeedback("didnt");
+      break;
+  }
+}
+
 function showNextCard() {
   // 重置卡片状态
   isCardFlipped = false;
@@ -328,8 +362,11 @@ function showNextCard() {
     cardBack.innerHTML = "";
   }
 
-  // 更新当前卡片索引
-  currentCardIndex = (currentCardIndex + 1) % currentBatchPool.length;
+  // 更新当前卡片索引（防越界处理）
+  currentCardIndex =
+    currentBatchPool.length > 0
+      ? Math.min(currentCardIndex + 1, currentBatchPool.length - 1)
+      : 0;
 
   // 更新统计信息
   updateStats();
