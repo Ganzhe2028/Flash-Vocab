@@ -1,17 +1,18 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const props = defineProps({
-  frontContent: String,  // 卡片正面内容（单词或中文释义）
-  backContent: String,   // 卡片背面内容（单词或中文释义）
-  memoryCount: Number,   // 记忆次数
+  frontContent: String, // 卡片正面内容（单词或中文释义）
+  backContent: String, // 卡片背面内容（单词或中文释义）
+  memoryCount: Number, // 记忆次数
 });
 
-const emit = defineEmits(['know', 'dontKnow', 'markAsMastered']);
+const emit = defineEmits(["know", "dontKnow", "markAsMastered"]);
 
 const isFlipped = ref(false);
 const showAnswer = ref(false);
 const answered = ref(false);
+const dontKnowSelected = ref(false); // 跟踪用户是否选择了"不认识"
 
 const flipCard = () => {
   if (answered.value) {
@@ -23,37 +24,41 @@ const handleKnow = () => {
   answered.value = true;
   showAnswer.value = true;
   isFlipped.value = true;
+  dontKnowSelected.value = false; // 用户选择了"认识"
 };
 
 const handleDontKnow = () => {
   answered.value = true;
   showAnswer.value = true;
   isFlipped.value = true;
+  dontKnowSelected.value = true; // 用户选择了"不认识"
 };
 
 const handleMarkAsMastered = () => {
-  emit('markAsMastered');
+  emit("markAsMastered");
   isFlipped.value = false;
 };
 
 const handleNext = () => {
-  emit('know');
+  emit("know");
   answered.value = false;
   showAnswer.value = false;
   isFlipped.value = false;
+  dontKnowSelected.value = false; // 重置状态
   setTimeout(() => {
     isFlipped.value = false;
   }, 100);
 };
 
 const handleWrong = () => {
-  emit('dontKnow');
+  emit("dontKnow");
   answered.value = false;
   showAnswer.value = false;
   isFlipped.value = false;
+  dontKnowSelected.value = false; // 重置状态
   setTimeout(() => {
     isFlipped.value = false;
-  }, 100);localStorage
+  }, 100);
 };
 </script>
 
@@ -69,15 +74,35 @@ const handleWrong = () => {
         <div class="mask" v-if="!showAnswer"></div>
       </div>
     </div>
-    
+
     <div class="action-buttons">
-      <button v-if="!answered" class="action-btn know" @click="handleKnow">✅ 认识</button>
-      <button v-if="!answered" class="action-btn dont-know" @click="handleDontKnow">❌ 不认识</button>
-      <button v-if="!answered" class="action-btn mastered" @click="handleMarkAsMastered">🎯 标熟</button>
-      
+      <button v-if="!answered" class="action-btn know" @click="handleKnow">
+        ✅ 认识
+      </button>
+      <button
+        v-if="!answered"
+        class="action-btn dont-know"
+        @click="handleDontKnow"
+      >
+        ❌ 不认识
+      </button>
+      <button
+        v-if="!answered"
+        class="action-btn mastered"
+        @click="handleMarkAsMastered"
+      >
+        🎯 标熟
+      </button>
+
       <div v-if="showAnswer" class="answer-actions">
         <button class="action-btn next" @click="handleNext">➡️ 下一个</button>
-        <button class="action-btn wrong" @click="handleWrong">❌ 答错了</button>
+        <button
+          v-if="!dontKnowSelected"
+          class="action-btn wrong"
+          @click="handleWrong"
+        >
+          ❌ 答错了
+        </button>
       </div>
     </div>
   </div>
@@ -101,7 +126,8 @@ const handleWrong = () => {
   transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.flashcard-front, .flashcard-back {
+.flashcard-front,
+.flashcard-back {
   position: absolute;
   width: 100%;
   height: 100%;
