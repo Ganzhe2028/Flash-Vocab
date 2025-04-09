@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const emit = defineEmits(['wordsLoaded', 'parseError']);
+const emit = defineEmits(["wordsLoaded", "parseError"]);
 
-const fileName = ref('未选择文件');
+const fileName = ref("未选择文件");
 const errorList = ref([]);
 const showErrorLog = ref(false);
 
@@ -13,13 +13,19 @@ const parseWordFile = (file) => {
 
   reader.onload = (e) => {
     const content = e.target.result;
-    const lines = content.split('\n').filter(line => line.trim() !== '');
+    const lines = content.split("\n").filter((line) => line.trim() !== "");
     const words = [];
     const errors = [];
 
     lines.forEach((line, index) => {
-      // 匹配格式：单词 词性. 中文释义 或 单词 词性 中文释义
-      const match = line.match(/^([^\s]+)\s+([^\s.]+)\.?\s+(.*?)\s*$/) || line.match(/^([^\s]+)\s+([^\s]+)\s+(.*?)\s*$/);
+      // 匹配格式：单词/短语 词性. 中文释义 或 单词/短语 词性 中文释义 或 单词/短语 词性.. 中文释义
+      // 更新正则表达式以支持多词短语、带连字符的词组、phr.等词性标记以及n./v.这样的组合词性，以及词性后面有多个点号的情况
+      const match =
+        line.match(
+          /^([\w\s-]+?)\s+([^\s.]+\.+|\/[^\s.]+\.+|\/v\.+|\/n\.+|\/adj\.+|\/adv\.+|\/phr\.+)\s+(.*?)\s*$/
+        ) ||
+        line.match(/^([\w\s-]+?)\s+(phr\.+)\s+(.*?)\s*$/) ||
+        line.match(/^([\w\s-]+?)\s+([^\s]+)\s+(.*?)\s*$/);
 
       if (match) {
         const [, word, partOfSpeech, definition] = match;
@@ -28,20 +34,24 @@ const parseWordFile = (file) => {
           word: word.trim(),
           partOfSpeech: partOfSpeech.trim(),
           definition: definition.trim(),
-          memoryCount: 0
+          memoryCount: 0,
         });
       } else {
-        errors.push(`第${index + 1}行: "${line}" 格式错误，应为 "单词 词性. 中文释义" 或 "单词 词性 中文释义"，例如：profound adj. 深刻的；深奥的`);
+        errors.push(
+          `第${
+            index + 1
+          }行: "${line}" 格式错误，应为 "单词 词性. 中文释义" 或 "单词 词性 中文释义"，例如：profound adj. 深刻的；深奥的`
+        );
       }
     });
 
     if (errors.length > 0) {
       errorList.value = errors;
       showErrorLog.value = true;
-      emit('parseError', errors);
+      emit("parseError", errors);
     } else {
       showErrorLog.value = false;
-      emit('wordsLoaded', words);
+      emit("wordsLoaded", words);
     }
   };
 
@@ -55,7 +65,7 @@ const handleFileChange = (event) => {
     fileName.value = file.name;
     parseWordFile(file);
   } else {
-    fileName.value = '未选择文件';
+    fileName.value = "未选择文件";
   }
 };
 </script>
@@ -63,10 +73,17 @@ const handleFileChange = (event) => {
 <template>
   <div class="file-upload-section">
     <h2>上传单词文件</h2>
-    <p class="instruction">支持TXT格式：单词 词性. 中文释义</p>
+    <p class="instruction">支持TXT格式：单词/短语 词性. 中文释义</p>
     <p class="example">示例：profound adj. 深刻的；深奥的</p>
+    <p class="example">示例：work-life balance n. 工作与生活平衡</p>
     <div class="upload-area">
-      <input type="file" id="wordFile" accept=".txt" class="file-input" @change="handleFileChange" />
+      <input
+        type="file"
+        id="wordFile"
+        accept=".txt"
+        class="file-input"
+        @change="handleFileChange"
+      />
       <label for="wordFile" class="file-label">选择文件</label>
       <span id="fileName">{{ fileName }}</span>
     </div>
