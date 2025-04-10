@@ -40,7 +40,12 @@ const handleMarkAsMastered = () => {
 };
 
 const handleNext = () => {
-  emit("know");
+  // 根据用户之前的选择决定发送什么事件
+  if (dontKnowSelected.value) {
+    emit("dontKnow");
+  } else {
+    emit("know");
+  }
   answered.value = false;
   showAnswer.value = false;
   isFlipped.value = false;
