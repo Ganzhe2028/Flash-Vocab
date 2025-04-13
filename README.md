@@ -20,6 +20,7 @@
 profound adj. 深刻的；深奥的
 ambiguous adj. 模棱两可的
 paradox n. 悖论
+> 注意：暂时不能有 ' 等特殊字符
 
 ## 🛠 使用说明
 1. 上传单词文件（UTF-8编码）

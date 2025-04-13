@@ -40,7 +40,7 @@ const parseWordFile = (file) => {
         errors.push(
           `第${
             index + 1
-          }行: "${line}" 格式错误，应为 "单词 词性. 中文释义" 或 "单词 词性 中文释义"，例如：profound adj. 深刻的；深奥的`
+          }行: "${line}" 格式错误，应为 "单词 词性. 中文释义" 或 "单词 词性 中文释义"，例如：profound adj. 深刻的；深奥的。注意：暂时不能有 ' 等特殊字符`
         );
       }
     });
