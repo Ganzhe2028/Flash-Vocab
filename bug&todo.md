@@ -2,6 +2,7 @@
 
 ## Short term
 
+- 增加dark mode
 - keyboard 操作, 类似不背
 - 结尾的 bug
 
