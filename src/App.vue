@@ -193,8 +193,8 @@ const loadSampleWords = async () => {
       // 使用更贪婪的匹配模式来确保捕获整个短语直到词性标记
       const match =
         line.match(
-          /^(.+?)\s+([^\s.]+\.+|\/[^\s.]+\.+|\/v\.+|\/n\.+|\/adj\.+|\/adv\.+|\/phr\.+)\s+(.+)$/
-        ) || line.match(/^(.+?)\s+(phr\.+)\s+(.+)$/);
+          /^(.+?)\s{2}([^\s.]+\.+|\/[^\s.]+\.+|\/v\.+|\/n\.+|\/adj\.+|\/adv\.+|\/phr\.+)\s{2}(.+)$/
+        ) || line.match(/^(.+?)\s{2}(phr\.+)\s{2}(.+)$/);
 
       if (match) {
         const [, word, partOfSpeech, definition] = match;
@@ -248,7 +248,7 @@ const resetProgress = () => {
 <template>
   <div class="app-container">
     <header>
-      <h1>单词闪卡记忆系统</h1>
+      <h1>Flash Vocab</h1>
       <p>基于艾宾浩斯记忆曲线，帮助你高效记忆单词</p>
       <button @click="resetProgress" class="reset-btn">重置进度</button>
     </header>
