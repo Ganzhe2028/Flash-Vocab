@@ -18,17 +18,12 @@ const parseWordFile = (file) => {
     const errors = [];
 
     lines.forEach((line, index) => {
-      // 匹配格式：单词/短语 词性. 中文释义 或 单词/短语 词性 中文释义 或 单词/短语 词性.. 中文释义
-      // 更新正则表达式以支持多词短语、带连字符的词组、phr.等词性标记以及n./v.这样的组合词性，以及词性后面有多个点号的情况
-      const match =
-        line.match(
-          /^([\w\s-]+?)\s+([^\s.]+\.+|\/[^\s.]+\.+|\/v\.+|\/n\.+|\/adj\.+|\/adv\.+|\/phr\.+)\s+(.*?)\s*$/
-        ) ||
-        line.match(/^([\w\s-]+?)\s+(phr\.+)\s+(.*?)\s*$/) ||
-        line.match(/^([\w\s-]+?)\s+([^\s]+)\s+(.*?)\s*$/);
+      // 使用简单的split方法按++分隔符拆分
+      const parts = line.trim().split('++');
+      const match = parts.length === 3 ? parts : null;
 
       if (match) {
-        const [, word, partOfSpeech, definition] = match;
+        const [word, partOfSpeech, definition] = match;
         words.push({
           id: index,
           word: word.trim(),
@@ -40,7 +35,7 @@ const parseWordFile = (file) => {
         errors.push(
           `第${
             index + 1
-          }行: "${line}" 格式错误，应为 "单词 词性. 中文释义" 或 "单词 词性 中文释义"，例如：profound adj. 深刻的；深奥的。注意：暂时不能有 ' 等特殊字符`
+          }行: "${line}" 格式错误，应为: profound++adj.++深刻的；深奥的 `
         );
       }
     });
@@ -73,9 +68,9 @@ const handleFileChange = (event) => {
 <template>
   <div class="file-upload-section">
     <h2>上传单词文件</h2>
-    <p class="instruction">支持TXT格式：单词/短语 词性. 中文释义</p>
-    <p class="example">示例：profound adj. 深刻的；深奥的</p>
-    <p class="example">示例：work-life balance n. 工作与生活平衡</p>
+    <p class="instruction">支持TXT格式：单词/短语++词性.++中文释义</p>
+    <p class="example">示例：profound++adj.++深刻的；深奥的</p>
+    <p class="example">示例：work-life balance++n.++工作与生活平衡</p>
     <div class="upload-area">
       <input
         type="file"

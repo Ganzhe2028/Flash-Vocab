@@ -191,10 +191,8 @@ const loadSampleWords = async () => {
     lines.forEach((line, index) => {
       // 更新正则表达式以支持多词短语和带连字符的词组，以及phr.等词性标记，以及词性后面有多个点号的情况
       // 使用更贪婪的匹配模式来确保捕获整个短语直到词性标记
-      const match =
-        line.match(
-          /^(.+?)\s{2}([^\s.]+\.+|\/[^\s.]+\.+|\/v\.+|\/n\.+|\/adj\.+|\/adv\.+|\/phr\.+)\s{2}(.+)$/
-        ) || line.match(/^(.+?)\s{2}(phr\.+)\s{2}(.+)$/);
+      const parts = line.trim().split('++');
+      const match = parts.length === 3 ? parts : null;
 
       if (match) {
         const [, word, partOfSpeech, definition] = match;
