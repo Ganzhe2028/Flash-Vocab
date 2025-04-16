@@ -118,7 +118,7 @@ h2 {
 .upload-area {
   display: flex;
   align-items: center;
-  margin: 15px 0;
+  justify-content: center;
 }
 
 .file-input {

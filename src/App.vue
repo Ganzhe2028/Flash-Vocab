@@ -268,9 +268,13 @@ const resetProgress = () => {
 
       <FlashCard
         v-if="currentWord"
+        :key="currentWord.word + currentWordIndex"
         :front-content="frontContent"
         :back-content="backContent"
         :memory-count="currentWord.memoryCount"
+        :word="currentWord.word"
+        :part-of-speech="currentWord.partOfSpeech"
+        :definition="currentWord.definition"
         @know="handleKnow"
         @dont-know="handleDontKnow"
         @mark-as-mastered="handleMarkAsMastered"
@@ -286,7 +290,7 @@ const resetProgress = () => {
   --success-color: #28a745;
   --danger-color: #dc3545;
   --warning-color: #ffc107;
-  --info-color: #17a2b8;
+  --info-color: #007bff;
   --light-color: #f8f9fa;
   --dark-color: #343a40;
   --body-bg: #f5f5f5;
@@ -303,7 +307,7 @@ body {
 }
 
 .app-container {
-  max-width: 800px;
+  width: 500px; /* 固定宽度防止布局变化 */
   margin: 0 auto;
   padding: 20px;
 }

@@ -57,6 +57,7 @@ h2 {
 
 .mode-buttons {
   display: flex;
+  justify-content: center;
   gap: 10px;
   margin: 15px 0;
 }
