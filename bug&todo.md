@@ -2,9 +2,8 @@
 
 ## Short Run
 
-- keyboard 操作, 类似不背
-- 部署上线Vercel
-- 增加dark mode
+- 部署上线 Vercel
+- 增加 dark mode
 - 结尾的 bug
 
 ## Medium Run
@@ -21,6 +20,17 @@
   - 甚至可以模仿薄荷阅读,直接让 AI 生成几篇带有这些词的文章, 且匹配用户阅读水平(让用户输入词汇量+蓝思值), 甚至有望促进用户阅读水平
 
 ---
+
+## ✅ 已完成的更新
+
+- keyboard 操作, 类似不背
+- 一大堆的 update & fix
+- 重构 by Vue3
+
+## ✅ 已完成的修复
+
+- 一大堆 fix
+- 正则识别
 
 ---
 
