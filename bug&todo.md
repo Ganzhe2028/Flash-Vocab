@@ -1,12 +1,13 @@
 # Bug 和 todolist
 
-## Short term
+## Short Run
 
-- 增加dark mode
 - keyboard 操作, 类似不背
+- 部署上线Vercel
+- 增加dark mode
 - 结尾的 bug
 
-## Medium term
+## Medium Run
 
 - 随机背单词
 - 优化布局，也许先用 iPad 画一下？或者 figma？
@@ -14,7 +15,7 @@
 - 像不背一样要求听写, 拼写
 - 增加记笔记的功能
 
-## Long term
+## Long Run
 
 - 像 Cling 一样, 增加 AI 帮助解释单词、用故事讲单词等个性化的帮助自然地记忆单词的能力
   - 甚至可以模仿薄荷阅读,直接让 AI 生成几篇带有这些词的文章, 且匹配用户阅读水平(让用户输入词汇量+蓝思值), 甚至有望促进用户阅读水平
