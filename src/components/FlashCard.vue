@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
 const props = defineProps({
   frontContent: String, // 卡片正面内容（单词或中文释义）
@@ -65,6 +65,31 @@ const handleWrong = () => {
     isFlipped.value = false;
   }, 100);
 };
+
+onMounted(() => {
+  const keyHandler = (e) => {
+    if (answered.value) {
+      // 只允许下一个和答错了
+      if (e.key === "n") {
+        handleNext();
+      } else if (e.key === "m" && showAnswer.value && !dontKnowSelected.value) {
+        handleWrong();
+      }
+    } else {
+      if (e.key === "q") {
+        handleKnow();
+      } else if (e.key === "w") {
+        handleDontKnow();
+      } else if (e.key === "e") {
+        handleMarkAsMastered();
+      }
+    }
+  };
+  window.addEventListener("keydown", keyHandler);
+  onUnmounted(() => {
+    window.removeEventListener("keydown", keyHandler);
+  });
+});
 </script>
 
 <template>
