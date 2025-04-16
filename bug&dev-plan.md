@@ -1,8 +1,9 @@
-# Bug 和 todolist
+# Bug 和 Dev-Plan
 
 ## Short Run
 
 - 部署上线 Vercel
+- 增加分段刷词的功能——现在不论多少都是一次性搞完; 不过也应该增加认真背词和仅仅是快速全部刷一遍的功能区别……
 - 增加 dark mode
 - 结尾的 bug
 
