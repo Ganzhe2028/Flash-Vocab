@@ -71,6 +71,7 @@ const handleFileChange = (event) => {
     <p class="instruction">支持TXT格式：单词/短语++词性.++中文释义</p>
     <p class="example">示例：profound++adj.++深刻的；深奥的</p>
     <p class="example">示例：work-life balance++n.++工作与生活平衡</p>
+    <p class="">💡Tips: 将你要背的单词收集到一个txt文档里(每行一个)然后给DeepSeek等AI让他按照格式给你补全词性和翻译, 整理格式</p>
     <div class="upload-area">
       <input
         type="file"
