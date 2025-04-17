@@ -68,10 +68,15 @@ const handleFileChange = (event) => {
 <template>
   <div class="file-upload-section">
     <h2>上传单词文件</h2>
-    <p class="instruction">支持TXT格式：单词/短语++词性.++中文释义</p>
-    <p class="example">示例：profound++adj.++深刻的；深奥的</p>
-    <p class="example">示例：work-life balance++n.++工作与生活平衡</p>
-    <p class="">💡Tips: 将你要背的单词收集到一个txt文档里(每行一个)然后给DeepSeek等AI让他按照格式给你补全词性和翻译, 整理格式</p>
+    <details class="details">
+      <summary style="cursor: pointer; font-weight: bold; margin-bottom: 10px;">如何准备单词文件？ (点击展开)</summary>
+      <p class="instruction">支持TXT格式：单词/短语++词性.++中文释义</p>
+      <p class="example">示例：profound++adj.++深刻的；深奥的</p>
+      <p class="example">示例：work-life balance++n.++工作与生活平衡</p>
+      <p>示例文件: <a href="https://github.com/Ganzhe2028/Flash-Vocab/blob/dev/sample_words.txt" target="_blank" rel="noopener noreferrer">sample_words.txt</a></p>
+      <p class="">💡Tips: 将你要背的单词收集到一个txt文档里(每行一个)然后给DeepSeek等AI让他按照格式给你补全词性和翻译, 整理格式</p>
+      <p class="more-info">更多信息见底部GitHub仓库的Readme</p>
+    </details>
     <div class="upload-area">
       <input
         type="file"
@@ -167,5 +172,13 @@ h2 {
 .error-log ul {
   margin: 10px 0 0;
   padding-left: 20px;
+}
+
+.more-info {
+  color: #6c757d;
+}
+
+.details {
+  margin-bottom: 20px;
 }
 </style>
