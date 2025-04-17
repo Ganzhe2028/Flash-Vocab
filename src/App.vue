@@ -281,6 +281,12 @@ const resetProgress = () => {
       />
     </div>
   </div>
+
+  <footer class="app-footer">
+      <a href="https://github.com/Ganzhe2028/Flash-Vocab" target="_blank" rel="noopener noreferrer">
+        View on GitHub
+      </a>
+  </footer>
 </template>
 
 <style>
@@ -329,6 +335,12 @@ header p {
 
 .study-section {
   margin-top: 20px;
+}
+
+app-footer {
+  text-align: center;
+  margin-top: 30px;
+  color: var(--secondary-color);
 }
 
 /* 响应式设计 */
