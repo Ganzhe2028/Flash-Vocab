@@ -282,7 +282,7 @@ const resetProgress = () => {
 
   <footer class="app-footer">
       <a href="https://github.com/Ganzhe2028/Flash-Vocab" target="_blank" rel="noopener noreferrer">
-        View on GitHub
+        GitHub
       </a>
   </footer>
 </template>
@@ -311,9 +311,20 @@ body {
 }
 
 .app-container {
-  width: 500px; /* 固定宽度防止布局变化 */
-  margin: 0 auto;
+  max-width: 800px;
+  margin-top: 20px;
   padding: 20px;
+  background-color: #ffffff00;
+  border-radius: 8px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+/* Media query for very narrow screens */
+@media (max-width: 420px) {
+  .app-container {
+    padding: 10px; /* Reduce padding on very small screens */
+    margin: 10px; /* Reduce margin as well */
+  }
 }
 
 header {
@@ -335,10 +346,19 @@ header p {
   margin-top: 20px;
 }
 
-app-footer {
+.app-footer {
   text-align: center;
-  margin-top: 30px;
+  margin-bottom: 30px;
   color: var(--secondary-color);
+
+}
+
+footer a {
+  /* background-color: #ffffff; */
+  /* box-shadow: 0 2px 4px rgba(14, 14, 14, 0.1); */
+  color: rgba(128, 128, 128, 0.5);
+  border-radius: 4px;
+  padding: 10px;
 }
 
 /* 响应式设计 */

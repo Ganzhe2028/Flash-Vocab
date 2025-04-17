@@ -123,8 +123,10 @@ h2 {
 
 .upload-area {
   display: flex;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
   align-items: center;
   justify-content: center;
+  gap: 10px; /* Add some space between items when wrapped */
 }
 
 .file-input {
@@ -143,8 +145,9 @@ h2 {
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
-  margin-right: 10px;
+  /* margin-right: 10px; Removed margin, using gap now */
   transition: background-color 0.3s;
+  white-space: nowrap; /* Prevent label text from wrapping */
 }
 
 .file-label:hover {
@@ -153,6 +156,7 @@ h2 {
 
 #fileName {
   color: #495057;
+  word-break: break-all; /* Allow long file names to break */
 }
 
 .error-log {
@@ -180,5 +184,23 @@ h2 {
 
 .details {
   margin-bottom: 20px;
+}
+
+/* Media query for very narrow screens */
+@media (max-width: 420px) {
+  .file-upload-section {
+    padding: 10px; /* Reduce padding on very small screens */
+  }
+  .upload-area {
+    flex-direction: column; /* Stack items vertically */
+    align-items: stretch; /* Stretch items to full width */
+  }
+  .file-label {
+    text-align: center; /* Center text in button */
+  }
+  #fileName {
+    text-align: center; /* Center file name */
+    margin-top: 5px;
+  }
 }
 </style>

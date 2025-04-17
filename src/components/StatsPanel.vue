@@ -73,8 +73,33 @@ defineProps({
 
 .stats-grid {
   display: grid;
+  /* Default to 3 columns */
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .stats-grid {
+    /* Change to 1 column on smaller screens */
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Media query for very narrow screens */
+@media (max-width: 420px) {
+  .stats-panel {
+    padding: 15px; /* Reduce padding */
+  }
+  .progress-container {
+    margin-bottom: 15px; /* Reduce margin */
+  }
+  .stat-value {
+    font-size: 20px; /* Reduce font size */
+  }
+  .stats-grid {
+    gap: 10px; /* Reduce gap */
+  }
 }
 
 .stat-item {

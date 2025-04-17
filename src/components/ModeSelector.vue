@@ -89,4 +89,19 @@ h2 {
   font-style: italic;
   margin-top: 10px;
 }
+
+/* Media query for very narrow screens */
+@media (max-width: 420px) {
+  .mode-buttons {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: stretch; /* Stretch buttons to full width */
+  }
+  .mode-btn {
+    width: 100%; /* Make buttons take full width */
+    box-sizing: border-box; /* Include padding and border in width */
+  }
+  .mode-selection {
+    padding: 15px; /* Slightly reduce padding */
+  }
+}
 </style>

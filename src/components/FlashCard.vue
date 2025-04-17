@@ -188,7 +188,8 @@ onMounted(() => {
 }
 
 .flashcard {
-  width: 300px;
+  width: 90%; /* Use percentage for responsiveness */
+  max-width: 300px; /* Keep a max width */
   height: 200px;
   perspective: 1000px;
   cursor: pointer;
@@ -295,17 +296,22 @@ onMounted(() => {
 
 .action-buttons {
   display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap */
   flex-direction: row;
   gap: 10px;
   justify-content: center;
   align-items: center; /* 垂直居中 */
   min-height: 40px; /* 防止按钮切换时布局跳动 */
+  width: 100%; /* Ensure container takes full width */
 }
 
 .answer-actions {
   display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap */
   gap: 10px;
+  justify-content: center; /* Center wrapped items */
   align-items: center; /* 垂直居中 */
+  width: 100%; /* Ensure container takes full width */
 }
 
 .action-btn {
