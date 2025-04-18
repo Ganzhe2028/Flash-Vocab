@@ -245,7 +245,7 @@ const resetProgress = () => {
   <div class="app-container">
     <header>
       <h1>Flash Vocab</h1>
-      <p>基于艾宾浩斯记忆曲线，帮助你高效记忆单词</p>
+      <p>基于艾宾浩斯记忆曲线｜不同单词文件也共享单词记忆次数！</p>
       <button @click="resetProgress" class="reset-btn">重置进度</button>
     </header>
 
