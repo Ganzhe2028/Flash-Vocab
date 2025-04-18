@@ -313,6 +313,8 @@ body {
 .app-container {
   max-width: 800px;
   margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 20px;
   background-color: #ffffff00;
   border-radius: 8px;
