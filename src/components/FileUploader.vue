@@ -7,6 +7,18 @@ const fileName = ref("未选择文件");
 const errorList = ref([]);
 const showErrorLog = ref(false);
 
+// 复制提示到剪贴板
+const copyPrompt = async () => {
+  const promptText = `请将以下单词列表转换为“单词/短语++词性.++中文释义”的格式，即：[单词][+][+][词性.][+][+][中文释义]，每行一个：\n[在此处粘贴你的单词列表]\n例如：\nprofound++adj.++深刻的；深奥的\nwork-life balance++n.++工作与生活平衡`;
+  try {
+    await navigator.clipboard.writeText(promptText);
+    alert('提示已复制到剪贴板！');
+  } catch (err) {
+    console.error('无法复制提示: ', err);
+    alert('复制失败，请手动复制。');
+  }
+};
+
 // 解析单词文件
 const parseWordFile = (file) => {
   const reader = new FileReader();
@@ -73,8 +85,8 @@ const handleFileChange = (event) => {
       <p class="instruction">支持TXT格式：单词/短语++词性.++中文释义</p>
       <p class="example">示例：profound++adj.++深刻的；深奥的</p>
       <p class="example">示例：work-life balance++n.++工作与生活平衡</p>
-      <p>示例文件: <a href="https://github.com/Ganzhe2028/Flash-Vocab/blob/dev/sample_words.txt" target="_blank" rel="noopener noreferrer">sample_words.txt</a></p>
-      <p class="">💡Tips: 将你要背的单词收集到一个txt文档里(每行一个)然后给DeepSeek等AI让他按照格式给你补全词性和翻译, 整理格式</p>
+      <p class="">💡Tips: 将你要背的单词收集到一个txt文档里(每行一个)然后给DeepSeek</p>
+      <button class="prompt" @click="copyPrompt">Copy Prompt</button>
       <p class="more-info">更多信息见底部GitHub仓库的Readme</p>
     </details>
     <div class="upload-area">
