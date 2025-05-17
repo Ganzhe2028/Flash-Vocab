@@ -9,7 +9,7 @@ const showErrorLog = ref(false);
 
 // 复制提示到剪贴板
 const copyPrompt = async () => {
-  const promptText = `请将以下单词列表转换为“单词/短语++词性.++中文释义”的格式，即：[单词][+][+][词性.][+][+][中文释义]，每行一个：\n[在此处粘贴你的单词列表]\n例如：\nprofound++adj.++深刻的；深奥的\nwork-life balance++n.++工作与生活平衡`;
+  const promptText = `请将以下单词列表转换为“单词/短语++词性.++中文释义”的格式，即：[单词][+][+][词性.][+][+][中文释义]，每行一个：\n[在此处粘贴你的单词列表]\n例如：\nprofound++adj.++深刻的；深奥的\nwork-life balance++n.++工作与生活平衡\nabstract++adj./n.++抽象的/摘要`;
   try {
     await navigator.clipboard.writeText(promptText);
     alert('提示已复制到剪贴板！');
